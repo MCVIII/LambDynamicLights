@@ -1,10 +1,8 @@
 plugins {
-    id 'fabric-loom' version '0.9.25'
-    id 'io.github.juuxel.loom-quiltflower' version '1.1.1'
+    id 'fabric-loom' version '0.10-SNAPSHOT'
     id 'java-library'
     id 'maven-publish'
     id 'com.github.johnrengelman.shadow' version '7.0.0'
-    id 'org.cadixdev.licenser' version '0.6.1'
     id 'com.modrinth.minotaur' version '1.2.+'
 }
 
@@ -96,6 +94,8 @@ dependencies {
         transitive = false
     }
 
+    implementation 'com.google.code.findbugs:jsr305:3.0.2'
+
     shadow 'com.electronwill.night-config:core:3.6.3'
     shadow 'com.electronwill.night-config:toml:3.6.3'
 }
@@ -125,11 +125,6 @@ jar {
     from('LICENSE') {
         rename { "${it}_${project.archivesBaseName}" }
     }
-}
-
-license {
-    header file('HEADER')
-    include '**/*.java'
 }
 
 shadowJar {
