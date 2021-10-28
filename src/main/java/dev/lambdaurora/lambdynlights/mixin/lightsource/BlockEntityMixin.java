@@ -10,6 +10,7 @@
 package dev.lambdaurora.lambdynlights.mixin.lightsource;
 
 import dev.lambdaurora.lambdynlights.DynamicLightSource;
+import dev.lambdaurora.lambdynlights.DynamicLightsMode;
 import dev.lambdaurora.lambdynlights.LambDynLights;
 import dev.lambdaurora.lambdynlights.api.DynamicLightHandlers;
 import it.unimi.dsi.fastutil.longs.LongOpenHashSet;
@@ -17,6 +18,7 @@ import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.WorldRenderer;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockPos.Mutable;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;

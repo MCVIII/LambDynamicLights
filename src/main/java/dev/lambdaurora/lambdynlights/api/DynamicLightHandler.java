@@ -12,6 +12,7 @@ package dev.lambdaurora.lambdynlights.api;
 import dev.lambdaurora.lambdynlights.LambDynLights;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.mob.CreeperEntity;
+import net.minecraft.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 

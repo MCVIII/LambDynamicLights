@@ -10,13 +10,17 @@
 package dev.lambdaurora.lambdynlights.api.item;
 
 import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
 import dev.lambdaurora.lambdynlights.LambDynLights;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.nbt.NbtCompound;
+import net.minecraft.state.StateManager;
 import net.minecraft.state.property.Property;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
