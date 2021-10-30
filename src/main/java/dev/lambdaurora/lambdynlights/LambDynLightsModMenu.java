@@ -11,7 +11,6 @@ package dev.lambdaurora.lambdynlights;
 
 import com.terraformersmc.modmenu.api.ConfigScreenFactory;
 import com.terraformersmc.modmenu.api.ModMenuApi;
-import dev.lambdaurora.lambdynlights.gui.SettingsScreen;
 
 /**
  * Represents the API implementation of ModMenu for LambDynamicLights.
@@ -21,8 +20,5 @@ import dev.lambdaurora.lambdynlights.gui.SettingsScreen;
  * @since 1.0.0
  */
 public class LambDynLightsModMenu implements ModMenuApi {
-    @Override
-    public ConfigScreenFactory<?> getModConfigScreenFactory() {
-        return SettingsScreen::new;
-    }
+
 }

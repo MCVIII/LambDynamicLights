@@ -84,8 +84,6 @@ public abstract class EntityMixin implements DynamicLightSource {
                 this.setDynamicLightEnabled(false);
             } else {
                 this.dynamicLightTick();
-                if (!LambDynLights.get().config.hasEntitiesLightSource() && this.getType() != EntityType.PLAYER)
-                    this.luminance = 0;
                 LambDynLights.updateTracking(this);
             }
         }
@@ -124,7 +122,7 @@ public abstract class EntityMixin implements DynamicLightSource {
 
     @Override
     public boolean shouldUpdateDynamicLight() {
-        var mode = LambDynLights.get().config.getDynamicLightsMode();
+        var mode = DynamicLightsMode.FANCY;
         if (!mode.isEnabled())
             return false;
         if (mode.hasDelay()) {

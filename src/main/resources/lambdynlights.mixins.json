@@ -9,7 +9,6 @@
     "DebugHudMixin",
     "EntityRendererMixin",
     "MinecraftClientMixin",
-    "VideoOptionsScreenMixin",
     "WorldMixin",
     "ltr.LilTaterBlockEntityMixin",
     "ltr.LilTaterBlocksMixin"

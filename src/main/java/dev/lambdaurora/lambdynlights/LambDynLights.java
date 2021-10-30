@@ -39,7 +39,7 @@ import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import java.util.Iterator;
-import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Predicate;
 
 /**
@@ -52,10 +52,10 @@ import java.util.function.Predicate;
 public class LambDynLights implements ClientModInitializer {
     public static final String MODID = "lambdynlights";
     private static final double MAX_RADIUS = 7.75;
+    private static final Object DUMMY_HASHMAP_OBJ = new Object();
     private static LambDynLights INSTANCE;
     public final Logger logger = LogManager.getLogger(MODID);
-    public final DynamicLightsConfig config = new DynamicLightsConfig(this);
-    private final ConcurrentLinkedQueue<DynamicLightSource> dynamicLightSources = new ConcurrentLinkedQueue<>();
+    private final ConcurrentHashMap<DynamicLightSource, Object> dynamicLightSources = new ConcurrentHashMap<>();
     private long lastUpdate = System.currentTimeMillis();
     private int lastUpdateCount = 0;
 
@@ -63,8 +63,6 @@ public class LambDynLights implements ClientModInitializer {
     public void onInitializeClient() {
         INSTANCE = this;
         this.log("Initializing LambDynamicLights...");
-
-        this.config.load();
 
         FabricLoader.getInstance().getEntrypointContainers("dynamiclights", DynamicLightsInitializer.class)
                 .stream().map(EntrypointContainer::getEntrypoint)
@@ -96,15 +94,12 @@ public class LambDynLights implements ClientModInitializer {
      * @param renderer the renderer
      */
     public void updateAll(@NotNull WorldRenderer renderer) {
-        if (!this.config.getDynamicLightsMode().isEnabled())
-            return;
-
         long now = System.currentTimeMillis();
         if (now >= this.lastUpdate + 50) {
             this.lastUpdate = now;
             this.lastUpdateCount = 0;
 
-            for (var lightSource : this.dynamicLightSources) {
+            for (var lightSource : this.dynamicLightSources.keySet()) {
                 if (lightSource.lambdynlights$updateDynamicLight(renderer)) this.lastUpdateCount++;
             }
         }
@@ -176,7 +171,7 @@ public class LambDynLights implements ClientModInitializer {
      */
     public double getDynamicLightLevel(@NotNull BlockPos pos) {
         double result = 0;
-        for (var lightSource : this.dynamicLightSources) {
+        for (var lightSource : this.dynamicLightSources.keySet()) {
             result = maxDynamicLightLevel(pos, lightSource, result);
         }
 
@@ -221,11 +216,9 @@ public class LambDynLights implements ClientModInitializer {
     public void addLightSource(@NotNull DynamicLightSource lightSource) {
         if (!lightSource.getDynamicLightWorld().isClient())
             return;
-        if (!this.config.getDynamicLightsMode().isEnabled())
-            return;
         if (this.containsLightSource(lightSource))
             return;
-        this.dynamicLightSources.add(lightSource);
+        this.dynamicLightSources.put(lightSource, DUMMY_HASHMAP_OBJ);
     }
 
     /**
@@ -255,12 +248,12 @@ public class LambDynLights implements ClientModInitializer {
      * @param lightSource the light source to remove
      */
     public void removeLightSource(@NotNull DynamicLightSource lightSource) {
-        var dynamicLightSources = this.dynamicLightSources.iterator();
+        var dynamicLightSources = this.dynamicLightSources.keySet().iterator();
         DynamicLightSource it;
         while (dynamicLightSources.hasNext()) {
             it = dynamicLightSources.next();
             if (it.equals(lightSource)) {
-                dynamicLightSources.remove();
+                this.dynamicLightSources.remove(it);
                 if (MinecraftClient.getInstance().worldRenderer != null)
                     lightSource.lambdynlights$scheduleTrackedChunksRebuild(MinecraftClient.getInstance().worldRenderer);
                 break;
@@ -272,11 +265,11 @@ public class LambDynLights implements ClientModInitializer {
      * Clears light sources.
      */
     public void clearLightSources() {
-        var dynamicLightSources = this.dynamicLightSources.iterator();
+        var dynamicLightSources = this.dynamicLightSources.keySet().iterator();
         DynamicLightSource it;
         while (dynamicLightSources.hasNext()) {
             it = dynamicLightSources.next();
-            dynamicLightSources.remove();
+            this.dynamicLightSources.remove(it);
             if (MinecraftClient.getInstance().worldRenderer != null) {
                 if (it.getLuminance() > 0)
                     it.resetDynamicLight();
@@ -291,12 +284,12 @@ public class LambDynLights implements ClientModInitializer {
      * @param filter the removal filter
      */
     public void removeLightSources(@NotNull Predicate<DynamicLightSource> filter) {
-        var dynamicLightSources = this.dynamicLightSources.iterator();
+        var dynamicLightSources = this.dynamicLightSources.keySet().iterator();
         DynamicLightSource it;
         while (dynamicLightSources.hasNext()) {
             it = dynamicLightSources.next();
             if (filter.test(it)) {
-                dynamicLightSources.remove();
+                this.dynamicLightSources.remove(it);
                 if (MinecraftClient.getInstance().worldRenderer != null) {
                     if (it.getLuminance() > 0)
                         it.resetDynamicLight();

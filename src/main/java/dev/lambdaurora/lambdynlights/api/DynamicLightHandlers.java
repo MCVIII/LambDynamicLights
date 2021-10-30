@@ -129,8 +129,6 @@ public final class DynamicLightHandlers {
      */
     @SuppressWarnings("unchecked")
     public static <T extends Entity> int getLuminanceFrom(@NotNull T entity) {
-        if (!LambDynLights.get().config.hasEntitiesLightSource())
-            return 0;
         var handler = (DynamicLightHandler<T>) getDynamicLightHandler(entity.getType());
         if (handler == null)
             return 0;
@@ -148,8 +146,6 @@ public final class DynamicLightHandlers {
      */
     @SuppressWarnings("unchecked")
     public static <T extends BlockEntity> int getLuminanceFrom(@NotNull T entity) {
-        if (!LambDynLights.get().config.hasBlockEntitiesLightSource())
-            return 0;
         DynamicLightHandler<T> handler = (DynamicLightHandler<T>) getDynamicLightHandler(entity.getType());
         if (handler == null)
             return 0;

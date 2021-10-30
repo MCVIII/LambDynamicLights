@@ -23,9 +23,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public class EntityRendererMixin<T extends Entity> {
     @Inject(method = "getBlockLight", at = @At("RETURN"), cancellable = true)
     private void onGetBlockLight(T entity, BlockPos pos, CallbackInfoReturnable<Integer> cir) {
-        if (!LambDynLights.get().config.getDynamicLightsMode().isEnabled())
-            return; // Do not touch to the value.
-
         int vanilla = cir.getReturnValueI();
         int entityLuminance = ((DynamicLightSource) entity).getLuminance();
         if (entityLuminance >= 15)

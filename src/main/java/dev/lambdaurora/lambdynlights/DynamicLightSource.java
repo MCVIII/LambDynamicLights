@@ -56,7 +56,7 @@ public interface DynamicLightSource {
      * @return {@code true} if the dynamic light is enabled, else {@code false}
      */
     default boolean isDynamicLightEnabled() {
-        return LambDynLights.get().config.getDynamicLightsMode().isEnabled() && LambDynLights.get().containsLightSource(this);
+        return LambDynLights.get().containsLightSource(this);
     }
 
     /**

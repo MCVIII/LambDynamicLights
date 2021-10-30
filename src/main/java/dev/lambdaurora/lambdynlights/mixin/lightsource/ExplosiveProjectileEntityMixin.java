@@ -24,8 +24,6 @@ public abstract class ExplosiveProjectileEntityMixin implements DynamicLightSour
 
     @Override
     public int getLuminance() {
-        if (LambDynLights.get().config.hasEntitiesLightSource())
-            return 14;
-        return 0;
+        return 14;
     }
 }

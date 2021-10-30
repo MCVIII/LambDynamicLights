@@ -37,13 +37,6 @@ public class DebugHudMixin {
                 .append(" (U: ")
                 .append(ldl.getLastUpdateCount());
 
-        if (!ldl.config.getDynamicLightsMode().isEnabled()) {
-            builder.append(" ; ");
-            builder.append(Formatting.RED);
-            builder.append("Disabled");
-            builder.append(Formatting.RESET);
-        }
-
         builder.append(')');
         list.add(builder.toString());
     }

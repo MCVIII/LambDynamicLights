@@ -98,11 +98,7 @@ public interface DynamicLightHandler<T> {
                 int luminance = 0;
 
                 if (entity.getClientFuseTime(0.f) > 0.001) {
-                    luminance = switch (LambDynLights.get().config.getCreeperLightingMode()) {
-                        case OFF -> 0;
-                        case SIMPLE -> 10;
-                        case FANCY -> (int) (entity.getClientFuseTime(0.f) * 10.0);
-                    };
+                    luminance = 10;
                 }
 
                 if (handler != null)

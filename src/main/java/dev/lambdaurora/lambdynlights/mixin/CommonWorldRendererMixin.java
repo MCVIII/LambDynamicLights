@@ -33,7 +33,7 @@ public abstract class CommonWorldRendererMixin implements WorldRendererAccessor 
             cancellable = true
     )
     private static void onGetLightmapCoordinates(BlockRenderView world, BlockState state, BlockPos pos, CallbackInfoReturnable<Integer> cir) {
-        if (!world.getBlockState(pos).isOpaqueFullCube(world, pos) && LambDynLights.get().config.getDynamicLightsMode().isEnabled())
+        if (!world.getBlockState(pos).isOpaqueFullCube(world, pos))
             cir.setReturnValue(LambDynLights.get().getLightmapWithDynamicLight(pos, cir.getReturnValue()));
     }
 }

@@ -95,9 +95,6 @@ dependencies {
     }
 
     implementation 'com.google.code.findbugs:jsr305:3.0.2'
-
-    shadow 'com.electronwill.night-config:core:3.6.3'
-    shadow 'com.electronwill.night-config:toml:3.6.3'
 }
 
 java {
@@ -131,8 +128,6 @@ shadowJar {
     dependsOn jar
     configurations = [project.configurations.shadow]
     archiveClassifier.set('dev')
-
-    relocate 'com.electronwill.nightconfig', 'dev.lambdaurora.lambdynlights.shadow.nightconfig'
 }
 remapJar.dependsOn(shadowJar)
 

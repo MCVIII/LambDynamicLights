@@ -107,7 +107,7 @@ public abstract class BlockEntityMixin implements DynamicLightSource {
 
     @Override
     public boolean shouldUpdateDynamicLight() {
-        var mode = LambDynLights.get().config.getDynamicLightsMode();
+        var mode = DynamicLightsMode.FANCY;
         if (!mode.isEnabled())
             return false;
         if (mode.hasDelay()) {

@@ -46,9 +46,6 @@ public abstract class TntEntityMixin extends Entity implements DynamicLightSourc
     private void onTick(CallbackInfo ci) {
         // We do not want to update the entity on the server.
         if (this.getEntityWorld().isClient()) {
-            if (!LambDynLights.get().config.getTntLightingMode().isEnabled())
-                return;
-
             if (this.isRemoved()) {
                 this.setDynamicLightEnabled(false);
             } else {
@@ -63,13 +60,7 @@ public abstract class TntEntityMixin extends Entity implements DynamicLightSourc
         if (this.isOnFire()) {
             this.luminance = 15;
         } else {
-            ExplosiveLightingMode lightingMode = LambDynLights.get().config.getTntLightingMode();
-            if (lightingMode == ExplosiveLightingMode.FANCY) {
-                var fuse = this.getFuse() / this.startFuseTimer;
-                this.luminance = (int) (-(fuse * fuse) * 10.0) + 10;
-            } else {
-                this.luminance = 10;
-            }
+            this.luminance = 10;
         }
     }
 

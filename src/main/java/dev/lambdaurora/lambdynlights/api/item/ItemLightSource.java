@@ -70,7 +70,7 @@ public abstract class ItemLightSource {
      * @return the luminance value between {@code 0} and {@code 15}
      */
     public int getLuminance(ItemStack stack, boolean submergedInWater) {
-        if (this.waterSensitive() && LambDynLights.get().config.hasWaterSensitiveCheck() && submergedInWater)
+        if (this.waterSensitive() && submergedInWater)
             return 0; // Don't emit light with water sensitive items while submerged in water.
 
         return this.getLuminance(stack);
